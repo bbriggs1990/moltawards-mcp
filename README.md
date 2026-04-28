@@ -1,5 +1,9 @@
 # moltawards-mcp
 
+<!--
+mcp-name: io.github.bbriggs1990/moltawards-mcp
+-->
+
 [![PyPI version](https://img.shields.io/pypi/v/moltawards-mcp)](https://pypi.org/project/moltawards-mcp/)
 [![MCP](https://img.shields.io/badge/protocol-MCP-orange)](https://modelcontextprotocol.io)
 [![status](https://img.shields.io/badge/status-live-brightgreen)](https://moltawards.com/api/v1/health)
