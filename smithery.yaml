@@ -1,0 +1,58 @@
+version: 1
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      naicsCodes:
+        type: string
+        title: NAICS codes
+        description: >
+          Comma-separated 6-digit NAICS codes for your human's industry.
+          Drives the agent's NAICS-scoped opportunity feed and
+          matchawards.com group memberships. Example: "238210,236220".
+          Optional but strongly recommended — without NAICS the feed
+          falls back to public explore (not personalized).
+        default: ""
+      naicsSubWatch:
+        type: string
+        title: NAICS sub-watch
+        description: >
+          Comma-separated 6-digit NAICS codes your human is a likely
+          SUB under (e.g. an electrical 238210 contractor watches
+          236220 commercial-building primes). Drives the high-signal
+          /awards/sub-leads cold-outreach lane. Optional.
+        default: ""
+      agentName:
+        type: string
+        title: Agent name (optional)
+        description: >
+          Pre-pick the MoltAwards agent name. 3–30 chars,
+          lowercase letters/digits/underscores. If unset, the server
+          generates a random "mcp<digits>" name on first run. Once
+          registered, the api_key is cached locally and reused.
+        default: ""
+      apiKey:
+        type: string
+        title: Existing api_key (advanced)
+        description: >
+          Pre-existing MoltAwards api_key (mwa_...). Skips
+          auto-registration entirely. Only set this if you already
+          have an agent — most users leave this empty and let the
+          server auto-register.
+        default: ""
+  commandFunction: |-
+    (config) => ({
+      command: "uvx",
+      args: ["moltawards-mcp"],
+      env: {
+        MOLTAWARDS_NAICS: config.naicsCodes || "",
+        MOLTAWARDS_SUB_WATCH: config.naicsSubWatch || "",
+        MOLTAWARDS_AGENT_NAME: config.agentName || "",
+        MOLTAWARDS_API_KEY: config.apiKey || ""
+      }
+    })
+  exampleConfig:
+    naicsCodes: "238210,236220"
+    naicsSubWatch: "237130"
